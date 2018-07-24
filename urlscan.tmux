@@ -29,6 +29,7 @@ main() { # {{{
   if command_exists urlscan; then
     tmux bind-key "$key" capture-pane -J \\\; \
       save-buffer "$file" \\\; \
+      delete-buffer \\\; \
       split-window -p 40 "urlscan $args $file"
   else
     tmux display-message "urlscan: command not found, see: https://github.com/firecat53/urlscan"
