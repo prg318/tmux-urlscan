@@ -21,16 +21,16 @@ command_exists() { # {{{
   command -v "$1" &> /dev/null
 } # }}}
 
-readonly file=${TMPDIR:-/tmp}/tmux-urlscan-buffer
-readonly args=$(get_tmux_option "@urlscan-args" "-c -d")
-readonly key=$(get_tmux_option "@urlscan-key" "u")
+readonly TMPFILE=$(mktemp --tmpdir tmux-urlscan.XXXXXX)
+readonly ARGS=$(get_tmux_option "@urlscan-args" "-c -d")
+readonly KEY=$(get_tmux_option "@urlscan-key" "u")
 
 main() { # {{{
   if command_exists urlscan; then
-    tmux bind-key "$key" capture-pane -J \\\; \
-      save-buffer "$file" \\\; \
+    tmux bind-key "$KEY" capture-pane -J \\\; \
+      save-buffer "$TMPFILE" \\\; \
       delete-buffer \\\; \
-      split-window -p 40 "urlscan $args $file"
+      split-window -p 40 "urlscan $ARGS $TMPFILE; trap 'rm -f $TMPFILE' EXIT"
   else
     tmux display-message "urlscan: command not found, see: https://github.com/firecat53/urlscan"
   fi
