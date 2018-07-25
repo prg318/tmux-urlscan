@@ -22,6 +22,13 @@ command_exists() { # {{{
 } # }}}
 
 readonly TMPFILE=$(mktemp --tmpdir tmux-urlscan.XXXXXX)
+
+cleanup() { # {{{
+  rm -f "$TMPFILE"
+} # }}}
+
+trap cleanup EXIT
+
 readonly ARGS=$(get_tmux_option "@urlscan-args" "-c -d")
 readonly KEY=$(get_tmux_option "@urlscan-key" "u")
 
@@ -30,11 +37,12 @@ main() { # {{{
     tmux bind-key "$KEY" capture-pane -J \\\; \
       save-buffer "$TMPFILE" \\\; \
       delete-buffer \\\; \
-      split-window -p 40 "urlscan $ARGS $TMPFILE; trap 'rm -f $TMPFILE' EXIT"
+      split-window -p 40 "urlscan $ARGS $TMPFILE"
   else
     tmux display-message "urlscan: command not found, see: https://github.com/firecat53/urlscan"
   fi
 } # }}}
+
 main
 
 # vim: sw=2 ts=2 et fdm=marker
