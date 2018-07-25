@@ -36,6 +36,16 @@ $ tmux source-file ~/.tmux.conf
 
 ## Configuration
 
+```sh
+set-option -g @urlscan-args '-c -d -r "echo {} | xsel -i -b"'
+```
+Default: `-c -d`
+
+```sh
+set-option -g @urlscan-key 'X'
+```
+Default: `u`
+
 ## License
 
 MIT
