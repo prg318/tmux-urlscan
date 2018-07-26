@@ -6,6 +6,10 @@
 
 set -euf -o pipefail
 
+command_exists() { # {{{
+  command -v "$1" &> /dev/null
+} # }}}
+
 get_tmux_option() { # {{{
   local option=$1
   local option_value=$(tmux show-option -gqv "$option")
@@ -17,13 +21,9 @@ get_tmux_option() { # {{{
   fi
 } # }}}
 
-command_exists() { # {{{
-  command -v "$1" &> /dev/null
-} # }}}
-
-readonly TMPFILE=$(mktemp --tmpdir tmux-urlscan.XXXXXX)
 readonly ARGS=$(get_tmux_option "@urlscan-args" "-c -d")
 readonly KEY=$(get_tmux_option "@urlscan-key" "u")
+readonly TMPFILE=$(mktemp -u --tmpdir tmux-urlscan.XXXXXX)
 
 main() { # {{{
   if command_exists urlscan; then
