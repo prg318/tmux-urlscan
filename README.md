@@ -41,7 +41,7 @@ $ tmux source-file ~/.tmux.conf
 ## Key bindings
 
 `Prefix` + <kbd>u</kbd>
-- parse URLs and email addresses
+- extract URLs and email addresses
 
 ## Configuration
 

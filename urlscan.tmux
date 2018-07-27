@@ -6,35 +6,13 @@
 
 set -euf -o pipefail
 
-command_exists() { # {{{
-  command -v "$1" &> /dev/null
-} # }}}
+readonly CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-get_tmux_option() { # {{{
-  local option=$1
-  local option_value=$(tmux show-option -gqv "$option")
-  local default_value=$2
-  if [[ -z "$option_value" ]]; then
-    echo "$default_value"
-  else
-    echo "$option_value"
-  fi
-} # }}}
+# shellcheck source=scripts/helpers.sh
+source "$CURRENT_DIR/scripts/helpers.sh"
 
-readonly ARGS=$(get_tmux_option "@urlscan-args" "-c -d")
-readonly KEY=$(get_tmux_option "@urlscan-key" "u")
-readonly TMPFILE=$(mktemp -u --tmpdir tmux-urlscan.XXXXXX)
+readonly KEY="$(get_tmux_option '@urlscan-key' 'u')"
 
-main() { # {{{
-  if command_exists urlscan; then
-    tmux bind-key "$KEY" capture-pane -J \\\; \
-      save-buffer "$TMPFILE" \\\; \
-      delete-buffer \\\; \
-      split-window -p 40 "urlscan $ARGS $TMPFILE; trap 'rm -f $TMPFILE' EXIT"
-  else
-    tmux display-message "urlscan: command not found, see: https://github.com/firecat53/urlscan"
-  fi
-} # }}}
-main
+tmux bind-key "$KEY" run-shell "$CURRENT_DIR/scripts/urlscan_extract.sh"
 
 # vim: sw=2 ts=2 et fdm=marker
