@@ -11,8 +11,7 @@ command_exists() { # {{{
 } # }}}
 
 get_tmux_option() { # {{{
-  local option="$1"
-  local option_value="$(tmux show-option -gqv "$option")"
+  local option_value="$(tmux show-option -gqv "$1")"
   local default_value="$2"
 
   if [[ -z "$option_value" ]]; then
