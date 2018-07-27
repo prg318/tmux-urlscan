@@ -45,7 +45,13 @@ $ tmux source-file ~/.tmux.conf
 
 ## Configuration
 
-> With this option you can change the `urlscan` arguments.
+> With this option you can change the command.
+```sh
+set-option -g @urlscan-cmd 'urlview'
+```
+Default: `urlscan`
+
+> With this option you can change the command arguments.
 ```sh
 set-option -g @urlscan-args '-c -d -r "echo {} | xsel -i -b"'
 ```
