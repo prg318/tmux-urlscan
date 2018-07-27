@@ -57,7 +57,7 @@ set-option -g @urlscan-args '-c -d -r "echo {} | xsel -i -b"'
 ```
 Default: `-c -d`
 
-> With this option you can change the default key binding.
+> With this option you can change the key binding.
 ```sh
 set-option -g @urlscan-key 'X'
 ```
