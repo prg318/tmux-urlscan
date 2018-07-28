@@ -11,17 +11,17 @@ readonly CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=helpers.sh
 source "$CURRENT_DIR/helpers.sh"
 
-readonly CMD="$(get_tmux_option '@urlscan-cmd' 'urlscan')"
+readonly PROG="$(get_tmux_option '@urlscan-prog' 'urlscan')"
 readonly ARGS="$(get_tmux_option '@urlscan-args' '-c -d')"
 readonly TMPFILE="$(mktemp -u --tmpdir tmux-urlscan.XXXXXX)"
 
-if command_exists "$CMD"; then
+if command_exists "$PROG"; then
   tmux capture-pane -J \; \
     save-buffer "$TMPFILE" \; \
     delete-buffer \; \
-    split-window -p 40 "$CMD $ARGS $TMPFILE; trap 'rm -f $TMPFILE' EXIT"
+    split-window -p 40 "$PROG $ARGS $TMPFILE; trap 'rm -f $TMPFILE' EXIT"
 else
-  tmux display-message "$CMD: command not found"
+  tmux display-message "$PROG: command not found"
 fi
 
 # vim: sw=2 ts=2 et fdm=marker

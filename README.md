@@ -47,7 +47,7 @@ $ tmux source-file ~/.tmux.conf
 
 > With this option you can change the command.
 ```sh
-set-option -g @urlscan-cmd 'urlview'
+set-option -g @urlscan-prog 'urlview'
 ```
 Default: `urlscan`
 
