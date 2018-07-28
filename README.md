@@ -51,7 +51,7 @@ set-option -g @urlscan-prog 'urlview'
 ```
 Default: `urlscan`
 
-> With this option you can change the command arguments.
+> With this option you can change the arguments.
 ```sh
 set-option -g @urlscan-args '-c -d -r "echo {} | xsel -i -b"'
 ```
