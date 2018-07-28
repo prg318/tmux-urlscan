@@ -6,15 +6,15 @@
 
 set -euf -o pipefail
 
-readonly CURRENT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+readonly CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=helpers.sh
 source "$CURRENT_DIR/helpers.sh"
 
-readonly PROG=$(get_tmux_option '@urlscan-prog' 'urlscan')
-readonly ARGS=$(get_tmux_option '@urlscan-args' '-c -d')
+readonly PROG="$(get_tmux_option '@urlscan-prog' 'urlscan')"
+readonly ARGS="$(get_tmux_option '@urlscan-args' '-c -d')"
 # TODO(filip): To avoid security holes, do not use the output of `mktemp -u` to create a file
-readonly TMPFILE=$(mktemp -u --tmpdir tmux-urlscan.XXXXXX)
+readonly TMPFILE="$(mktemp -u --tmpdir tmux-urlscan.XXXXXX)"
 
 if command_exists "$PROG"; then
   tmux capture-pane -J \; \
