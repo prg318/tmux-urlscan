@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Copyright (c) 2018 Filip Szymański. All rights reserved.
 # Use of this source code is governed by an MIT license that can be
