@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Copyright (c) 2018 Filip Szymański. All rights reserved.
 # Use of this source code is governed by an MIT license that can be
@@ -11,15 +11,9 @@ command_exists() { # {{{
 } # }}}
 
 get_tmux_option() { # {{{
-  local option_value default_value
-  option_value="$(tmux show-option -gqv "$1")"
-  default_value="$2"
-
-  if [[ -z "$option_value" ]]; then
-    echo "$default_value"
-  else
-    echo "$option_value"
-  fi
+  local value
+  value="$(tmux show-option -gqv "$1")"
+  [[ -n "$value" ]] && echo "$value" || echo "$2"
 } # }}}
 
 # vim: sw=2 ts=2 et fdm=marker
